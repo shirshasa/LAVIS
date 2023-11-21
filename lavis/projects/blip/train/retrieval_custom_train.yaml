@@ -8,7 +8,6 @@ model:
 
   model_type: coco
   load_finetuned: True
-  finetuned: lavis/output/BLIP/Retrieval_COCO/50-epochs/checkpoint_best.pth
 
   queue_size: 57600
   alpha: 0.4
@@ -17,6 +16,10 @@ model:
 
 datasets:
   custom_retrieval: # name of the dataset builder
+    classes:
+        - "dog"
+        - "cat"
+        - "car"
     vis_processor:
         train:
           name: "blip_image_train"
@@ -44,9 +47,9 @@ run:
   batch_size_train: 8
   batch_size_eval: 8
 
-  train_splits: []
-  valid_splits: ["test"]
-  test_splits: []
+  train_splits: ["train"]
+  valid_splits: ["val"]
+  test_splits: ["test"]
 
   # distribution
   device: "cuda"
@@ -56,13 +59,13 @@ run:
   use_dist_eval_sampler: False
 
   # model specific
-  k_test: 10
+  k_test: 10 # only 10, as there is only 10 unique texts in the datasets
 
   # misc
   seed: 42
-  output_dir: "output/BLIP/test_all"
+  output_dir: "output/BLIP/base_experiment"
 
   amp: False
   resume_ckpt_path: null
 
-  evaluate: True
+  evaluate: False

@@ -48,12 +48,7 @@ class CustomRetrievalBuilder(BaseDatasetBuilder):
     train_dataset_cls = CustomDataset
     eval_dataset_cls = CustomEvalDataset
 
-    DATASET_CONFIG_DICT = {"default": "configs/datasets/custom_ret.yaml"}
-
-    CLASSES = [
-        "cat",
-        "dog",
-    ]
+    DATASET_CONFIG_DICT = {"default": "configs/datasets/custom_clf_dataset.yaml"}
 
     def _download_data(self):
         pass
@@ -69,6 +64,8 @@ class CustomRetrievalBuilder(BaseDatasetBuilder):
         build_info = self.config.build_info
 
         ann_info = build_info.annotations
+
+        classes = self.config.classes
 
         datasets = dict()
         for split in ann_info.keys():
@@ -102,7 +99,7 @@ class CustomRetrievalBuilder(BaseDatasetBuilder):
                 vis_processor=vis_processor,
                 text_processor=text_processor,
                 img_folder=ann_paths,
-                classes=self.CLASSES
+                classes=classes
             )
 
         return datasets
