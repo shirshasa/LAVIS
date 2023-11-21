@@ -1,0 +1,14 @@
+datasets:
+  custom_retrieval:  # builder name
+    data_type: images # [images|videos|features]
+    classes:  # if empty, classes will be parsed from folder structure
+
+    build_info:
+      # Be careful not to append minus sign (-) before split to avoid itemizing
+      annotations:
+        train:
+          storage: datasets/classification/train
+        val:
+          storage:  datasets/classification/val
+        test:
+          storage: datasets/classification/test

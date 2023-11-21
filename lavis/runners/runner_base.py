@@ -20,7 +20,7 @@ from lavis.common.dist_utils import (
     get_rank,
     get_world_size,
     is_main_process,
-    main_process,
+    main_process, is_dist_avail_and_initialized,
 )
 from lavis.common.registry import registry
 from lavis.common.utils import is_url
@@ -400,7 +400,8 @@ class RunnerBase:
             if self.evaluate_only:
                 break
 
-            dist.barrier()
+            if is_dist_avail_and_initialized():
+                dist.barrier()
 
         # testing phase
         test_epoch = "best" if len(self.valid_splits) > 0 else cur_epoch
